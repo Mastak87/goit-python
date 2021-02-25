@@ -1,1 +1,2 @@
-# Task1
+Name = input('Enter your name please:')
+print('Hello {}'.format(Name))
