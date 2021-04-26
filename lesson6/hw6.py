@@ -45,6 +45,8 @@ def garbage(path):
                 os.mkdir(os.path.join('C:\garbage', 'images'))
             if not os.path.exists('C:\\garbage\\images\\'+ i.name):
                 shutil.move(i, r'C:\garbage\images')
+                os.rename(r'C:\\garbage\\images\\' + i.name, f'C:\\garbage\\images\\{normalize(i.stem)}{i.suffix}')
+
 
 
         elif i.suffix in video_extensions:
@@ -54,6 +56,7 @@ def garbage(path):
                 os.mkdir(os.path.join('C:\garbage', 'video'))
             if not os.path.exists('C:\\garbage\\video\\' + i.name):
                 shutil.move(i, r'C:\garbage\video')
+                os.rename(r'C:\\garbage\\video\\' + i.name, f'C:\\garbage\\video\\{normalize(i.stem)}{i.suffix}')
 
         elif i.suffix in documents_extensions:
             documents_files.add(f'{normalize(i.stem)}{i.suffix}')
@@ -62,6 +65,7 @@ def garbage(path):
                 os.mkdir(os.path.join('C:\garbage', 'documents'))
             if not os.path.exists('C:\\garbage\\documents\\' + i.name):
                 shutil.move(i, r'C:\garbage\documents')
+                os.rename(r'C:\\garbage\\documents\\' + i.name, f'C:\\garbage\\documents\\{normalize(i.stem)}{i.suffix}')
 
         elif i.suffix in music_extensions:
             music_files.add(f'{normalize(i.stem)}{i.suffix}')
@@ -70,6 +74,7 @@ def garbage(path):
                 os.mkdir(os.path.join('C:\garbage', 'audio'))
             if not os.path.exists('C:\\garbage\\audio\\' + i.name):
                 shutil.move(i, r'C:\garbage\audio')
+                os.rename(r'C:\\garbage\\audio\\' + i.name, f'C:\\garbage\\audio\\{normalize(i.stem)}{i.suffix}')
 
         elif i.suffix in archive_extensions:
             archive_files.add(f'{normalize(i.stem)}{i.suffix}')
@@ -84,11 +89,21 @@ def garbage(path):
         else:
             unknown_extensions.add(i.suffix)
 
-    for folder in path.iterdir():
+    for del_folder in path.iterdir():
         try:
-            Path.rmdir(folder)
+            Path.rmdir(del_folder)
         finally:
             continue
+
+    for rename_folder in path.iterdir():
+
+        if rename_folder.is_dir():
+            try:
+                os.rename(rename_folder, f'{rename_folder.parent}\\{normalize(rename_folder.name)}')
+            finally:
+                continue
+
+
 
 
 if __name__ == '__main__':
