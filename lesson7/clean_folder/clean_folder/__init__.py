@@ -1,0 +1,1 @@
+from clean_folder.clean_folder.clean import normalize,garbage,del_folder,rename_folder
